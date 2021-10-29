@@ -53,27 +53,48 @@
         <p>Sent successfully</p>
     @endif
     @if($errors !== null)
-        @foreach($errors as $error)
+        @foreach($errors->all() as $error)
             <p class="error">{{$error}}</p>
         @endforeach
     @endif
-    <form method = "POST" action="{{route('appeal')}}">
+    <form method = "POST" action="{{route('appeal_post')}}">
         @csrf
         <div>
             <label>Name</label>
-            <input class="bordered" name="name" type="text" value="{{request()->isMethod('post') ? old('name') : ''}}" maxlength="20" size="20"/>
+            <input class="bordered" name="name" type="text" value="{{$errors !== null  ? old('name') : ''}}" />
+        </div>
+        <div>
+            <label>Surname</label>
+            <input class="bordered" name="surname" type="text" value="{{$errors !== null ? old('surname') : ''}}" size="20"/>
+        </div>
+        <div>
+            <label>Patronymic</label>
+            <input class="bordered" name="patronymic" type="text" value="{{$errors !== null ? old('patronymic') : ''}}" size="20"/>
+        </div>
+        <div>
+            <label>Age</label>
+            <input class="bordered" name="age" type="text"  value="{{$errors !== null ? old('age') : ''}}"/>
         </div>
         <div>
             <label>Phone</label>
-            <input class="bordered" name="phone" type="tel" value="{{request()->isMethod('post') ? old('phone') : ''}}" maxlength="11" size="20"/>
+            <input class="bordered" name="phone"  type="text" value="{{$errors !== null ? old('phone') : ''}}" size="20"/>
         </div>
         <div>
             <label>Email</label>
-            <input class="bordered" name="email" type="email" value="{{request()->isMethod('post') ? old('email') : ''}}" maxlength="100" size="20"/>
+            <input class="bordered" name="email" type="text" value="{{$errors !== null ? old('email') : ''}}" size="20"/>
         </div>
         <div>
             <label>Message</label>
-            <textarea class="bordered" name="message"  maxlength="100" rows="5">{{request()->isMethod('post') ? old('message') : ''}}</textarea>
+            <textarea class="bordered" name="message" rows="5">{{$errors !== null ? old('message') : ''}}</textarea>
+        </div>
+        <div>
+            <label>Gender</label>
+            <label>
+                <select class="bordered" name="gender">
+                    <option value="0" {{$errors !== null && old('gender') == 0 ? 'selected' : ''}}>Male</option>
+                    <option value="1" {{$errors !== null && old('gender') == 1 ? 'selected' : ''}}>Female</option>
+                </select>
+            </label>
         </div>
         <input type="submit">
     </form>
