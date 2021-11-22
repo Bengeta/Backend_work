@@ -46,9 +46,14 @@
         .error {
             color: red;}
     </style>
+
 </head>
     <body >
     <h2>Отправить обращение</h2>
+    @if ($Message === true)
+        <p>Thanks for your feedback</p>
+        <a href="{{url()->previous()}}">Way to the back</a>
+    @endif
     @if($success)
         <p>Sent successfully</p>
     @endif

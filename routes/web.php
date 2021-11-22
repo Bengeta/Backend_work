@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppealController;
 use App\Http\Controllers\NewsController;
+use App\Http\Middleware\RedirectToAppeal;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ Route::get('/news', [NewsController::class, 'getList'])->name('news_list');
 
 Route::get('/news/{slug}', [NewsController::class, 'getDetails'])->name('news_item');
 
-Route::get('/appeal', [AppealController::class, 'appealGet'])->name('appeal');
-Route::post('/appeal', [AppealController::class, 'appealPost'])->name('appeal_post');
-
+Route::get('/appeal', [AppealController::class, 'appealGet'])
+    ->name('appeal')
+    ->withoutMiddleware(RedirectToAppeal::class);
+Route::post('/appeal', [AppealController::class, 'appealPost'])
+    ->name('appeal_post')
+    ->withoutMiddleware(RedirectToAppeal::class);

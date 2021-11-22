@@ -19,7 +19,14 @@ class AppealController extends Controller
     public function appealGet(Request $request)
     {
         $success = $request->session()->get('success', false);
-        return view('appealView', ['success' => $success]);
+        $Message = false;
+        if ($request->get('accepted')) {
+            if ($request->session()->get('message'))
+                $Message = true;
+            $request->session()->put('message', false);
+        }
+        return view('appealView', ['success' => $success, 'Message' => $Message]);
+
     }
 
     public function appealPost(AppealPostRequest $request)
@@ -34,6 +41,7 @@ class AppealController extends Controller
         $appeal->email = $request->input('email');
         $appeal->phone = PhoneSanitizer::sanitize($request->input('phone'));
         $appeal->save();
+        $request->session()->put('appeal', true);
         return redirect()
             ->route('appeal')
             ->with('success', true);
