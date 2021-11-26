@@ -32,8 +32,6 @@
         .w-5 {
             width: 1.25rem
         }
-
-
     </style>
 
     <style>
@@ -41,6 +39,7 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
+    @includeWhen(session()->has('suggest'),'Suggestion')
 </head>
     <body >
     <h1>Новости</h1>>
