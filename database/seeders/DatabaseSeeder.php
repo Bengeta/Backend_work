@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
+    /**migrations
      * Seed the application's database.
      *
      * @return void
@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            UsersSeeder::class,
+            PostSeeder::class,
+            CommentSeeder::class,
             NewsSeeder::class,
         ]);
     }
