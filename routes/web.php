@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\AppealController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\WebAuthController;
 use App\Http\Middleware\RedirectToAppeal;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +34,13 @@ Route::get('/appeal', [AppealController::class, 'appealGet'])
 Route::post('/appeal', [AppealController::class, 'appealPost'])
     ->name('appeal_post')
     ->withoutMiddleware(RedirectToAppeal::class);
+
+
+Route::match(['GET', 'POST'], '/registration', [WebAuthController::class, 'registration'])->name('registration');
+Route::match(['GET', 'POST'], '/login', [WebAuthController::class, 'login'])->name('login');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [WebAuthController::class, 'profile'])->name('profile');
+    Route::get('/logout', [WebAuthController::class, 'logout'])->name('logout');
+});
+
+

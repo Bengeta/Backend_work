@@ -90,7 +90,6 @@ class CommentController extends Controller
      */
     public function destroy(Request $request, Post $post,Comment $comment): JsonResponse
     {
-        error_log(1);
         $comment->delete();
         return response()->json(['message' => 'Comment removed successfully']);
     }

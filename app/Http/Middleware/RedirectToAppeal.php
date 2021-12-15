@@ -23,9 +23,7 @@ class RedirectToAppeal
             session()->put('suggestion', 0);
             session()->put('transaction', 0);
         }
-        error_log($request->session()->get('transaction'));
         $settings = app(Settings::class);
-        error_log($request->session()->get('suggestion'));
         if ($request->session()->get('suggestion') < $settings->max) {
             if ($request->session()->get('transaction') < $settings->period) {
                 $request->session()->increment('transaction');

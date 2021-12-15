@@ -19,6 +19,7 @@
             }
         </style>
         @includeWhen(session('suggest'),'includes.Suggestion')
+        @include('auth')
     </head>
     <body>
     <a href="{{route('news_list')}}">Новости</a>
