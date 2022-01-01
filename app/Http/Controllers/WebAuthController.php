@@ -21,7 +21,7 @@ class WebAuthController extends Controller
             $request['login'] = strtolower($request['login']);
             $validated = $request->validate([
                 'login' => 'unique:users|required|between:5, 30',
-                'password' => 'required|between:10, 30|regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{10,}$/'
+                'password' => 'required|between:10,30|regex:/^(?=(.*[A-Z]){1})(?=(.*[a-z]){1})(?=(.*[0-9]){1})(?=(.*[re@#$%^!&+=.\-_*]){1})([a-zA-Z0-9@#$%^!&+=*.\-_])*$/'
             ]);
             $user = new User();
             $user->name = $request['name'];

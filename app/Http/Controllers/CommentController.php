@@ -11,12 +11,20 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class CommentController extends Controller
 {
     private const PAGE_SIZE = 5;
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index','show');
+        $this->middleware('auth.optional')->only('index','show');
+        $this->authorizeResource(Comment::class, 'comment');
+    }
 
     /**
      * Display a listing of the resource.
@@ -44,7 +52,7 @@ class CommentController extends Controller
         $validated = $validator->validated();
         $comment = new Comment();
         $comment->text = $validated['text'];
-        $comment->user_id = User::inRandomOrder()->first()->id;
+        $comment->user_id = Auth::user()->id;
         $comment->post_id = $post->id;
         $comment->save();
 
@@ -54,6 +62,8 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Request $request
+     * @param Post $post
      * @param Comment $comment
      * @return JsonResponse
      */
@@ -88,7 +98,7 @@ class CommentController extends Controller
      * @param Comment $comment
      * @return JsonResponse
      */
-    public function destroy(Request $request, Post $post,Comment $comment): JsonResponse
+    public function destroy(Request $request, Post $post, Comment $comment): JsonResponse
     {
         $comment->delete();
         return response()->json(['message' => 'Comment removed successfully']);
