@@ -49,6 +49,7 @@
 
 </head>
     <body >
+    @include('auth')
     <h2>Отправить обращение</h2>
     @if ($Message === true)
         <p>Thanks for your feedback</p>

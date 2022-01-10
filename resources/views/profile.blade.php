@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Profile</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,21 +16,32 @@
             line-height: 1.15;
             -webkit-text-size-adjust: 100%
         }
+
         body {
             margin: 0
         }
+
         a {
             background-color: transparent
         }
+
         [hidden] {
             display: none
         }
+
         html {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
             line-height: 1.5
         }
-        .w-5 {
-            width: 1.25rem
+
+        *, :after, :before {
+            box-sizing: border-box;
+            border: 0 solid #e2e8f0
+        }
+
+        a {
+            color: inherit;
+            text-decoration: inherit
         }
     </style>
 
@@ -38,20 +49,21 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
+
+        .bordered {
+            border: 1px solid black;
+        }
+
+        .error {
+            color: red;
+        }
     </style>
-    @includeWhen(session()->has('suggest'),'Suggestion')
     @include('auth')
 </head>
-    <body >
-    <h1>Новости</h1>>
-    @foreach ($news as $news_item)
-        <a href="{{route('news_item',['slug'=>$news_item->slug])}}">{{ $news_item->title }}</a>
-        <p>{{$news_item->published_at}}</p>
-        @if($news_item->description != null)
-            <p>{{$news_item->description}}</p>
-        @endif
-    @endforeach
-
-    {{ $news->links() }}
-    </body>
+<body>
+<h2>Profile</h2>
+<p>Login: {{ $user->login }}</p>
+<p>Name: {{ $user->name  }}</p>
+<p>Email: {{ $user->email }}</p>
+</body>
 </html>
