@@ -4,8 +4,6 @@ use App\Http\Controllers\AppealController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\WebAuthController;
 use App\Http\Middleware\RedirectToAppeal;
 use Illuminate\Support\Facades\Route;

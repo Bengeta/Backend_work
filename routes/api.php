@@ -33,6 +33,6 @@ Route::post('/registration', [ApiAuthController::class, 'registration']);
 Route::post('/login', [ApiAuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/profile', [ApiAuthController::class, 'profile']);
+    Route::get('/profile', [ApiAuthController::class, 'profile']);
     Route::post('/logout', [ApiAuthController::class, 'logout']);
 });
