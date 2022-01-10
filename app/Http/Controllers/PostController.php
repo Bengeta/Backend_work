@@ -12,12 +12,25 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
     const PAGE_SIZE = 5;
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index','show');
+        $this->middleware('auth.optional')->only('index','show');
+        $this->authorizeResource(Post::class, 'post');
+    }
 
     /**
      * Display a listing of the resource.
@@ -47,7 +60,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $validated['title'];
         $post->text = $validated['text'];
-        $post->user_id = User::inRandomOrder()->first()->id;
+        $post->user_id = Auth::user()->id;
         $post->save();
 
         return response()->json(new PostResource($post), 201);
@@ -94,6 +107,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post, Comment $comment): JsonResponse
     {
+        $post->comments()->delete();
         $post->delete();
         return response()->json(['message' => 'Post removed successfully']);
     }

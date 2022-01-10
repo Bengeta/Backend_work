@@ -12,8 +12,7 @@ class NewsController extends Controller
         $news = News::query()
             ->whereDate('published_at', '<=', date('Y-m-d H:i:s'))
             ->where('is_published',true)
-            ->orderByDesc('published_at')
-            ->orderByDesc('id')
+            ->ordered()
             ->paginate(5);
         return view('news_list',['news'=>$news]);
     }

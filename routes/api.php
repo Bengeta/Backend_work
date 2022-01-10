@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NewsApiController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,19 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('posts', PostController::class)
-    ->scoped(['post' => 'slug'])
-    ->missing(function () {
-        return response()
-            ->json(['message' => 'Post not found'], 404);
+    Route::apiResource('news', NewsApiController::class)->scoped(['news' => 'slug'])->missing(function () {
+        return response()->json(['message' => 'News not found'], 404);
     });
-Route::apiResource('posts.comments', CommentController::class)
-    ->scoped(['post' => 'slug', 'comment' => 'id'])
-    ->missing(function () {
-        return response()
-            ->json(['message' => 'Post or comment not found'], 404);
+    Route::apiResource('posts', PostController::class)->scoped(['post' => 'slug'])->missing(function () {
+        return response()->json(['message' => 'Post not found'], 404);
     });
-
+    Route::apiResource('posts.comments', CommentController::class)->scoped(['post' => 'slug', 'comment' => 'id'])->missing(function () {
+        return response()->json(['message' => 'Post or comment not found'], 404);
+    });
 
 Route::post('/registration', [ApiAuthController::class, 'registration']);
 
