@@ -84,7 +84,6 @@ class CommentController extends Controller
         $validator = Validator::make(request()->all(), [
             'text' => 'required|max:2000']);
         if ($validator->fails()) return response()->json($validator->errors()->all(), 422);
-
         $validated = $validator->validated();
         if (isset($validated['text'])) $comment->text = $validated['text'];
         $comment->save();
